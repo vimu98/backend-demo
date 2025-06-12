@@ -23,6 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public List<EmployeeDTO> getAll() {
+        System.out.println("hi hi kohomada...");
         return repo.findAll().stream()
                 .map(e -> mapper.map(e, EmployeeDTO.class))
                 .collect(Collectors.toList());
