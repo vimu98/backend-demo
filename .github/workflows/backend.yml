@@ -44,6 +44,13 @@ jobs:
 
             echo "🧼 Removing old springboot container if exists..."
             docker rm -f springboot || true
+            
+            echo "✅ Cloning the latest code..."
+            cd ~
+            rm -rf frontend-demo
+            git clone https://github.com/vimu98/backend-demo
+            cd backend-demo
+
 
             echo "🚀 Starting new springboot container..."
             docker build -t springboot-app .
