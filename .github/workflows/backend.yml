@@ -12,9 +12,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Build JAR
+      - name: Build WAR
         run: |
-          cd backend
           ./mvnw clean package -DskipTests
 
       - name: Copy Files via SCP
@@ -23,7 +22,7 @@ jobs:
           host: ${{ secrets.BACKEND_EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "backend/target/*.jar"
+          source: "target/*.war"
           target: "~/app"
 
       - name: SSH and Restart App
@@ -35,4 +34,4 @@ jobs:
           script: |
             docker stop springboot || true
             docker rm springboot || true
-            docker run -d -p 8080:8080 --name springboot -v ~/app:/app openjdk:17 java -jar /app/*.jar
+            docker run -d -p 8080:8080 --name springboot -v ~/app:/app openjdk:17 java -jar /app/*.war
